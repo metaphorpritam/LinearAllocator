@@ -1,0 +1,41 @@
+# doc/DOXYGEN.in
+PROJECT_NAME           = "Linear Allocator"
+PROJECT_BRIEF          = "A simple linear allocator with alignment specification for C++23"
+
+OUTPUT_DIRECTORY       = C:/C_Cpp_projects/LinearAllocatorProject/doc
+INPUT                  = C:/C_Cpp_projects/LinearAllocatorProject/src C:/C_Cpp_projects/LinearAllocatorProject/doc/mainpage.dox C:/C_Cpp_projects/LinearAllocatorProject/doc/library_usage.dox
+FILE_PATTERNS          = *.hpp *.cpp *.tpp *.dox
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_PACKAGE        = YES
+EXTRACT_STATIC         = YES
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_DEPENDENCY_GRAPHS = YES
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+
+RECURSIVE              = YES
+HAVE_DOT               = YES
+UML_LOOK               = YES
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+TEMPLATE_RELATIONS     = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+JAVADOC_AUTOBRIEF      = YES
+QT_AUTOBRIEF           = YES
+MULTILINE_CPP_IS_BRIEF = YES
+INHERIT_DOCS           = YES
+DISTRIBUTE_GROUP_DOC   = YES
+GROUP_NESTED_COMPOUNDS = YES
+SUBGROUPING            = YES
+INLINE_GROUPED_CLASSES = YES
+
+# Add special command for page linking and additional documentation
+ALIASES += "library_usage=\page library_usage Using Linear Allocator as a Library"

@@ -1,0 +1,15 @@
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/example_allocator.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/docs.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/edit_cache.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/rebuild_cache.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/list_install_components.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/install.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/install/local.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/CMakeFiles/install/strip.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/fmt.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/edit_cache.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/rebuild_cache.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/list_install_components.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/install.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/install/local.dir
+C:/C_Cpp_projects/LinearAllocatorProject/build/_deps/fmt-build/CMakeFiles/install/strip.dir
