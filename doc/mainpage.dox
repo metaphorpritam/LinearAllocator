@@ -3,17 +3,21 @@
 
 @section intro Introduction
 
-This is a Data-Oriented Programming implementation of a simplified linear allocator with precise alignment control. The allocator follows strict DOP principles with public data members, struct methods, and no getters/setters.
+This is a Data-Oriented Programming implementation of a linear/arena allocator with precise alignment control, based on the design described in "Memory Allocation Strategies - Part 2" by Ginger Bill. The allocator follows strict DOP principles with public data members, struct methods, and no getters/setters.
 
 @section overview Overview
 
-This implementation provides a simple linear allocator with alignment specification following data-oriented programming principles. The allocator supports:
+This implementation provides a comprehensive linear allocator following data-oriented programming principles. The allocator supports:
 
 - Precise memory alignment for any data type
-- Using `uint8_t*` instead of `char*` for pointer arithmetic
-- Passing the allocator by reference to functions
-- Memory reset operation
+- Efficient O(1) allocation time
+- Temporary memory savepoints for short-lived allocations
+- Resize functionality for the last allocation
+- Using custom user-provided memory buffers
+- Memory zeroing control
+- Reset operation for reusing memory
 - Error handling via `std::expected` (C++23)
+- Passing by reference to functions that need to allocate memory
 
 @section design Design Principles
 
@@ -37,6 +41,11 @@ if (!allocator_result) {
 }
 
 auto& allocator = allocator_result.value();
+
+// Or create from an existing buffer
+uint8_t buffer[512];
+auto buffer_allocator_result = alloc::LinearAllocator::create_from_buffer(buffer, sizeof(buffer));
+auto& buffer_allocator = buffer_allocator_result.value();
 ```
 
 @subsection allocation Allocating Memory
@@ -57,6 +66,38 @@ if (array_result) {
 }
 ```
 
+@subsection resize Resizing Memory
+
+```cpp
+// Allocate initial memory
+auto points_result = allocator.allocate<Point>(3);
+Point* points = points_result.value();
+// Initialize points...
+
+// Resize the allocation
+auto resized_points = allocator.resize<Point>(points, 3, 5);
+Point* more_points = resized_points.value();
+// Initialize the new points...
+```
+
+@subsection temp Temporary Memory Savepoints
+
+```cpp
+// Create a temporary memory savepoint
+{
+    auto temp = alloc::TempArenaMemory::begin(allocator);
+
+    // Allocate temporary memory
+    auto temp_result = allocator.allocate<float>(100);
+    float* temp_data = temp_result.value();
+    // Use temporary data...
+
+    // Explicitly end temporary memory (optional)
+    temp.end();
+    // Or let it automatically end when it goes out of scope
+}
+```
+
 @subsection func Passing to Functions
 
 ```cpp
@@ -70,6 +111,9 @@ std::expected<Point*, alloc::AllocError> create_points(alloc::LinearAllocator& a
     // Initialize points...
     return points;
 }
+
+// Call the function
+auto points = create_points(allocator);
 ```
 
 @subsection reset Memory Management

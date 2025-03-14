@@ -1,0 +1,5 @@
+<map id="alloc::TempArenaMemory" name="alloc::TempArenaMemory">
+<area shape="rect" id="Node000001" title="Temporary memory savepoint for a LinearAllocator." alt="" coords="5,352,164,464"/>
+<area shape="rect" id="Node000002" href="$structalloc_1_1_linear_allocator.html" title="A linear/arena allocator that allocates memory linearly from a pre&#45;allocated block." alt="" coords="15,5,155,288"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,288,87,335,82,335,82,288"/>
+</map>

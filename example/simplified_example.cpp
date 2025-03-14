@@ -117,8 +117,7 @@ int main() {
     }
     fmt::print("Used memory: {} bytes\n", allocator.used);
 
-    // Note: We're not freeing the allocator's memory in this example
-    // In a real application, you would need to free it manually since we removed the destructor
+    // Clean up the allocator's memory
     std::free(allocator.buffer);
 
     return 0;

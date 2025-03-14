@@ -90,16 +90,20 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="intro"></a>
 Introduction</h1>
-<p>This is a Data-Oriented Programming implementation of a simplified linear allocator with precise alignment control. The allocator follows strict DOP principles with public data members, struct methods, and no getters/setters.</p>
+<p>This is a Data-Oriented Programming implementation of a linear/arena allocator with precise alignment control, based on the design described in "Memory Allocation Strategies - Part 2" by Ginger Bill. The allocator follows strict DOP principles with public data members, struct methods, and no getters/setters.</p>
 <h1><a class="anchor" id="overview"></a>
 Overview</h1>
-<p>This implementation provides a simple linear allocator with alignment specification following data-oriented programming principles. The allocator supports:</p>
+<p>This implementation provides a comprehensive linear allocator following data-oriented programming principles. The allocator supports:</p>
 <ul>
 <li>Precise memory alignment for any data type</li>
-<li>Using <code>uint8_t*</code> instead of <code>char*</code> for pointer arithmetic</li>
-<li>Passing the allocator by reference to functions</li>
-<li>Memory reset operation</li>
+<li>Efficient O(1) allocation time</li>
+<li>Temporary memory savepoints for short-lived allocations</li>
+<li>Resize functionality for the last allocation</li>
+<li>Using custom user-provided memory buffers</li>
+<li>Memory zeroing control</li>
+<li>Reset operation for reusing memory</li>
 <li>Error handling via <code>std::expected</code> (C++23)</li>
+<li>Passing by reference to functions that need to allocate memory</li>
 </ul>
 <h1><a class="anchor" id="design"></a>
 Design Principles</h1>
@@ -115,14 +119,20 @@ Basic Usage</h1>
 <h2><a class="anchor" id="creation"></a>
 Creating an Allocator</h2>
 <div class="fragment"><div class="line"><span class="comment">// Create a 1KB allocator</span></div>
-<div class="line"><span class="keyword">auto</span> allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#ae7290003e4506083a0d4038c9be399ab">alloc::LinearAllocator::create</a>(1024);</div>
+<div class="line"><span class="keyword">auto</span> allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#aca95ee52059b27c558bff705b263cbc6">alloc::LinearAllocator::create</a>(1024);</div>
 <div class="line"><span class="keywordflow">if</span> (!allocator_result) {</div>
 <div class="line">    <span class="comment">// Handle error</span></div>
 <div class="line">    <span class="keywordflow">return</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span>&amp; allocator = allocator_result.value();</div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html_ae7290003e4506083a0d4038c9be399ab"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#ae7290003e4506083a0d4038c9be399ab">alloc::LinearAllocator::create</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create(size_t size_in_bytes)</div><div class="ttdoc">Create a new Linear Allocator with a given capacity.</div></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Or create from an existing buffer</span></div>
+<div class="line">uint8_t buffer[512];</div>
+<div class="line"><span class="keyword">auto</span> buffer_allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#a7caa487cdb042f4ecedb69a646fe5dc0">alloc::LinearAllocator::create_from_buffer</a>(buffer, <span class="keyword">sizeof</span>(buffer));</div>
+<div class="line"><span class="keyword">auto</span>&amp; buffer_allocator = buffer_allocator_result.value();</div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a7caa487cdb042f4ecedb69a646fe5dc0"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a7caa487cdb042f4ecedb69a646fe5dc0">alloc::LinearAllocator::create_from_buffer</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create_from_buffer(uint8_t *buffer_ptr, size_t size_in_bytes, bool zero_memory=true)</div><div class="ttdoc">Create a new Linear Allocator from an existing buffer.</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_aca95ee52059b27c558bff705b263cbc6"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#aca95ee52059b27c558bff705b263cbc6">alloc::LinearAllocator::create</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create(size_t size_in_bytes, bool zero_memory=true)</div><div class="ttdoc">Create a new Linear Allocator with a given capacity.</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="allocation"></a>
 Allocating Memory</h2>
 <div class="fragment"><div class="line"><span class="comment">// Allocate memory for an integer</span></div>
@@ -138,6 +148,33 @@ Allocating Memory</h2>
 <div class="line">    <span class="keywordtype">float</span>* array = array_result.value();</div>
 <div class="line">    <span class="comment">// Use array...</span></div>
 <div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="resize"></a>
+Resizing Memory</h2>
+<div class="fragment"><div class="line"><span class="comment">// Allocate initial memory</span></div>
+<div class="line"><span class="keyword">auto</span> points_result = allocator.allocate&lt;Point&gt;(3);</div>
+<div class="line">Point* points = points_result.value();</div>
+<div class="line"><span class="comment">// Initialize points...</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Resize the allocation</span></div>
+<div class="line"><span class="keyword">auto</span> resized_points = allocator.resize&lt;Point&gt;(points, 3, 5);</div>
+<div class="line">Point* more_points = resized_points.value();</div>
+<div class="line"><span class="comment">// Initialize the new points...</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="temp"></a>
+Temporary Memory Savepoints</h2>
+<div class="fragment"><div class="line"><span class="comment">// Create a temporary memory savepoint</span></div>
+<div class="line">{</div>
+<div class="line">    <span class="keyword">auto</span> temp = <a class="code hl_function" href="structalloc_1_1_temp_arena_memory.html#a1d513dee106fbf3c4e0c52282bb253fd">alloc::TempArenaMemory::begin</a>(allocator);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Allocate temporary memory</span></div>
+<div class="line">    <span class="keyword">auto</span> temp_result = allocator.allocate&lt;<span class="keywordtype">float</span>&gt;(100);</div>
+<div class="line">    <span class="keywordtype">float</span>* temp_data = temp_result.value();</div>
+<div class="line">    <span class="comment">// Use temporary data...</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Explicitly end temporary memory (optional)</span></div>
+<div class="line">    temp.end();</div>
+<div class="line">    <span class="comment">// Or let it automatically end when it goes out of scope</span></div>
+<div class="line">}</div>
+<div class="ttc" id="astructalloc_1_1_temp_arena_memory_html_a1d513dee106fbf3c4e0c52282bb253fd"><div class="ttname"><a href="structalloc_1_1_temp_arena_memory.html#a1d513dee106fbf3c4e0c52282bb253fd">alloc::TempArenaMemory::begin</a></div><div class="ttdeci">static TempArenaMemory begin(LinearAllocator &amp;alloc)</div><div class="ttdoc">Create a temporary arena memory savepoint.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:133</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="func"></a>
 Passing to Functions</h2>
 <div class="fragment"><div class="line">std::expected&lt;Point*, alloc::AllocError&gt; create_points(<a class="code hl_struct" href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a>&amp; <a class="code hl_namespace" href="namespacealloc.html">alloc</a>) {</div>
@@ -150,8 +187,11 @@ Passing to Functions</h2>
 <div class="line">    <span class="comment">// Initialize points...</span></div>
 <div class="line">    <span class="keywordflow">return</span> points;</div>
 <div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Call the function</span></div>
+<div class="line"><span class="keyword">auto</span> points = create_points(allocator);</div>
 <div class="ttc" id="anamespacealloc_html"><div class="ttname"><a href="namespacealloc.html">alloc</a></div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:8</div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A simplified linear allocator.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:24</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A linear/arena allocator that allocates memory linearly from a pre-allocated block.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:27</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="reset"></a>
 Memory Management</h2>
 <div class="fragment"><div class="line"><span class="comment">// Reset the allocator (keeps the memory but resets usage counter)</span></div>

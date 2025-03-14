@@ -167,8 +167,9 @@ int main() {
                    : "Unexpected error");
     }
 
-    // No need to free buffers as they will be freed automatically
-    // when the allocators go out of scope
+    // Clean up the allocator's memory
+    std::free(allocator.buffer);
+    // Note: We don't free user_buffer as it's a stack-allocated array
 
     return 0;
 }

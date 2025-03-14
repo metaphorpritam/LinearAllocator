@@ -156,6 +156,8 @@ FetchContent Method</h2>
 </ol>
 <h1><a class="anchor" id="usage_examples"></a>
 Usage Examples</h1>
+<h2><a class="anchor" id="basic_example"></a>
+Basic Example</h2>
 <p>Here's a complete example of using the Linear Allocator in your project:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_linear_allocator_8hpp.html">LinearAllocator/LinearAllocator.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -189,7 +191,7 @@ Usage Examples</h1>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="comment">// Create a 1KB allocator</span></div>
-<div class="line">    <span class="keyword">auto</span> allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#ae7290003e4506083a0d4038c9be399ab">alloc::LinearAllocator::create</a>(1024);</div>
+<div class="line">    <span class="keyword">auto</span> allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#aca95ee52059b27c558bff705b263cbc6">alloc::LinearAllocator::create</a>(1024);</div>
 <div class="line">    <span class="keywordflow">if</span> (!allocator_result) {</div>
 <div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to create allocator\n&quot;</span>;</div>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
@@ -206,17 +208,140 @@ Usage Examples</h1>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="a_linear_allocator_8hpp_html"><div class="ttname"><a href="_linear_allocator_8hpp.html">LinearAllocator.hpp</a></div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A simplified linear allocator.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:24</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A linear/arena allocator that allocates memory linearly from a pre-allocated block.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:27</div></div>
 <div class="ttc" id="astructalloc_1_1_linear_allocator_html_a7c9ecdb15ce514ad1221d721e03c631e"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a7c9ecdb15ce514ad1221d721e03c631e">alloc::LinearAllocator::allocate</a></div><div class="ttdeci">std::expected&lt; T *, AllocError &gt; allocate(size_t count=1, size_t alignment=alignof(T))</div><div class="ttdoc">Allocate memory with a specified alignment.</div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a95da4ddfa14c9964cafa295be2169e26"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a95da4ddfa14c9964cafa295be2169e26">alloc::LinearAllocator::buffer</a></div><div class="ttdeci">uint8_t * buffer</div><div class="ttdoc">Pointer to the memory buffer.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:25</div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html_ae7290003e4506083a0d4038c9be399ab"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#ae7290003e4506083a0d4038c9be399ab">alloc::LinearAllocator::create</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create(size_t size_in_bytes)</div><div class="ttdoc">Create a new Linear Allocator with a given capacity.</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a95da4ddfa14c9964cafa295be2169e26"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a95da4ddfa14c9964cafa295be2169e26">alloc::LinearAllocator::buffer</a></div><div class="ttdeci">uint8_t * buffer</div><div class="ttdoc">Pointer to the memory buffer.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:28</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_aca95ee52059b27c558bff705b263cbc6"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#aca95ee52059b27c558bff705b263cbc6">alloc::LinearAllocator::create</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create(size_t size_in_bytes, bool zero_memory=true)</div><div class="ttdoc">Create a new Linear Allocator with a given capacity.</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="advanced_example"></a>
+Advanced Example with New Features</h2>
+<p>Here's a more advanced example showcasing the newer features:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_linear_allocator_8hpp.html">LinearAllocator/LinearAllocator.hpp</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>Point {</div>
+<div class="line">    <span class="keywordtype">float</span> x, y, z;</div>
+<div class="line"> </div>
+<div class="line">    Point(<span class="keywordtype">float</span> x_val = 0, <span class="keywordtype">float</span> y_val = 0, <span class="keywordtype">float</span> z_val = 0)</div>
+<div class="line">        : x(x_val), y(y_val), z(z_val) {}</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Function that allocates and initializes points</span></div>
+<div class="line">std::expected&lt;Point*, alloc::AllocError&gt; create_points(<a class="code hl_struct" href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a>&amp; <a class="code hl_namespace" href="namespacealloc.html">alloc</a>, <span class="keywordtype">int</span> count) {</div>
+<div class="line">    <span class="keyword">auto</span> points_result = <a class="code hl_namespace" href="namespacealloc.html">alloc</a>.allocate&lt;Point&gt;(count);</div>
+<div class="line">    <span class="keywordflow">if</span> (!points_result) {</div>
+<div class="line">        <span class="keywordflow">return</span> std::unexpected(points_result.error());</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    Point* points = points_result.value();</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; count; i++) {</div>
+<div class="line">        <span class="keyword">new</span> (&amp;points[i]) Point(i * 1.0f, i * 2.0f, i * 3.0f);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> points;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="comment">// Create a 1KB allocator</span></div>
+<div class="line">    <span class="keyword">auto</span> allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#aca95ee52059b27c558bff705b263cbc6">alloc::LinearAllocator::create</a>(1024);</div>
+<div class="line">    <span class="keywordflow">if</span> (!allocator_result) {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to create allocator\n&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span>&amp; allocator = allocator_result.value();</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Created allocator with &quot;</span> &lt;&lt; allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#a1509acdf5e75b8996cf04799e281bed3">capacity</a> &lt;&lt; <span class="stringliteral">&quot; bytes capacity\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Allocate points</span></div>
+<div class="line">    <span class="keyword">auto</span> points_result = create_points(allocator, 3);</div>
+<div class="line">    <span class="keywordflow">if</span> (!points_result) {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to allocate points\n&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    Point* points = points_result.value();</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Allocated 3 points:\n&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 3; i++) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;  Point &quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;: (&quot;</span></div>
+<div class="line">                  &lt;&lt; points[i].x &lt;&lt; <span class="stringliteral">&quot;, &quot;</span></div>
+<div class="line">                  &lt;&lt; points[i].y &lt;&lt; <span class="stringliteral">&quot;, &quot;</span></div>
+<div class="line">                  &lt;&lt; points[i].z &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line">    }</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Used memory: &quot;</span> &lt;&lt; allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de">used</a> &lt;&lt; <span class="stringliteral">&quot; bytes\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Demonstrate resize functionality</span></div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\nResizing the points array from 3 to 5 points...\n&quot;</span>;</div>
+<div class="line">    <span class="keyword">auto</span> resized_points = allocator.<a class="code hl_function" href="structalloc_1_1_linear_allocator.html#a8cf7e65012d8238d871a075bc49fccba">resize</a>&lt;Point&gt;(points, 3, 5);</div>
+<div class="line">    <span class="keywordflow">if</span> (!resized_points) {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to resize points\n&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    points = resized_points.value();</div>
+<div class="line">    <span class="keyword">new</span> (&amp;points[3]) Point(10.0f, 11.0f, 12.0f);</div>
+<div class="line">    <span class="keyword">new</span> (&amp;points[4]) Point(13.0f, 14.0f, 15.0f);</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Resized to 5 points, used memory: &quot;</span> &lt;&lt; allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de">used</a> &lt;&lt; <span class="stringliteral">&quot; bytes\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Demonstrate temporary memory</span></div>
+<div class="line">    {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;\nCreating temporary memory scope...\n&quot;</span>;</div>
+<div class="line">        <span class="keyword">auto</span> temp_mem = <a class="code hl_function" href="structalloc_1_1_temp_arena_memory.html#a1d513dee106fbf3c4e0c52282bb253fd">alloc::TempArenaMemory::begin</a>(allocator);</div>
+<div class="line"> </div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Used before temp allocations: &quot;</span> &lt;&lt; allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de">used</a> &lt;&lt; <span class="stringliteral">&quot; bytes\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Allocate some temporary data</span></div>
+<div class="line">        <span class="keyword">auto</span> temp_result = allocator.<a class="code hl_function" href="structalloc_1_1_linear_allocator.html#a7c9ecdb15ce514ad1221d721e03c631e">allocate</a>&lt;<span class="keywordtype">float</span>&gt;(100);</div>
+<div class="line">        <span class="keywordflow">if</span> (!temp_result) {</div>
+<div class="line">            std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to allocate temporary data\n&quot;</span>;</div>
+<div class="line">            <span class="keywordflow">return</span> 1;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordtype">float</span>* temp_data = temp_result.value();</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; i++) {</div>
+<div class="line">            temp_data[i] = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(i);</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Used during temp allocations: &quot;</span> &lt;&lt; allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de">used</a> &lt;&lt; <span class="stringliteral">&quot; bytes\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Temp memory goes out of scope here and will be automatically rolled back</span></div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Used after temp memory scope ends: &quot;</span> &lt;&lt; allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de">used</a> &lt;&lt; <span class="stringliteral">&quot; bytes\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Create a linear allocator from an existing buffer</span></div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;\nCreating an allocator from an existing buffer...\n&quot;</span>;</div>
+<div class="line">    uint8_t buffer[512];</div>
+<div class="line">    <span class="keyword">auto</span> buffer_allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#a7caa487cdb042f4ecedb69a646fe5dc0">alloc::LinearAllocator::create_from_buffer</a>(buffer, <span class="keyword">sizeof</span>(buffer));</div>
+<div class="line">    <span class="keywordflow">if</span> (!buffer_allocator_result) {</div>
+<div class="line">        std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to create buffer allocator\n&quot;</span>;</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span>&amp; buffer_allocator = buffer_allocator_result.value();</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Created buffer allocator with &quot;</span> &lt;&lt; buffer_allocator.capacity &lt;&lt; <span class="stringliteral">&quot; bytes capacity\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Clean up the allocator&#39;s memory</span></div>
+<div class="line">    std::free(allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#a95da4ddfa14c9964cafa295be2169e26">buffer</a>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespacealloc_html"><div class="ttname"><a href="namespacealloc.html">alloc</a></div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:8</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a1509acdf5e75b8996cf04799e281bed3"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a1509acdf5e75b8996cf04799e281bed3">alloc::LinearAllocator::capacity</a></div><div class="ttdeci">size_t capacity</div><div class="ttdoc">Total capacity of the allocator in bytes.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:29</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a7caa487cdb042f4ecedb69a646fe5dc0"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a7caa487cdb042f4ecedb69a646fe5dc0">alloc::LinearAllocator::create_from_buffer</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create_from_buffer(uint8_t *buffer_ptr, size_t size_in_bytes, bool zero_memory=true)</div><div class="ttdoc">Create a new Linear Allocator from an existing buffer.</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a8cf7e65012d8238d871a075bc49fccba"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a8cf7e65012d8238d871a075bc49fccba">alloc::LinearAllocator::resize</a></div><div class="ttdeci">std::expected&lt; T *, AllocError &gt; resize(T *old_ptr, size_t old_count, size_t new_count, size_t alignment=alignof(T))</div><div class="ttdoc">Resize the last allocation made.</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_ac0e0a6335bf1eae7604d4b88f24368de"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de">alloc::LinearAllocator::used</a></div><div class="ttdeci">size_t used</div><div class="ttdoc">Current number of bytes used.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:30</div></div>
+<div class="ttc" id="astructalloc_1_1_temp_arena_memory_html_a1d513dee106fbf3c4e0c52282bb253fd"><div class="ttname"><a href="structalloc_1_1_temp_arena_memory.html#a1d513dee106fbf3c4e0c52282bb253fd">alloc::TempArenaMemory::begin</a></div><div class="ttdeci">static TempArenaMemory begin(LinearAllocator &amp;alloc)</div><div class="ttdoc">Create a temporary arena memory savepoint.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:133</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="best_practices"></a>
 Best Practices</h1>
 <ol type="1">
-<li><b>Error Handling</b>: Always check the result of allocation operations</li>
-<li><b>Memory Management</b>: Remember to manually free the allocator's buffer when done</li>
-<li><b>Reset</b>: Use reset when you want to reuse memory for new allocations</li>
-<li><b>Alignment</b>: Use proper alignment for SIMD types and cache-sensitive data </li>
+<li><b>Error Handling</b>: Always check the result of allocation operations using the <code>std::expected</code> interface.</li>
+<li><b>Memory Management</b>: Remember to manually free the allocator's buffer when done (<code>std::free(allocator.buffer)</code>).</li>
+<li><b>Reset</b>: Use <code>reset()</code> when you want to reuse memory for new allocations.</li>
+<li><b>Temporary Memory</b>: Use <code>TempArenaMemory</code> for short-lived allocations that can be automatically cleaned up.</li>
+<li><b>Resize</b>: Use <code>resize()</code> for the last allocation when you need to grow or shrink it.</li>
+<li><b>Buffer Creation</b>: Use <code>create_from_buffer()</code> when you already have a memory buffer you want to use.</li>
+<li><b>Alignment</b>: Use proper alignment for SIMD types, cache-sensitive data, and hardware-specific requirements.</li>
+<li><b>Zero Memory</b>: Use the <code>zero_memory</code> parameter to control whether memory is zeroed on allocation. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

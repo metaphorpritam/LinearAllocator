@@ -84,6 +84,8 @@ For automatic dependency management:
 
 @section usage_examples Usage Examples
 
+@subsection basic_example Basic Example
+
 Here's a complete example of using the Linear Allocator in your project:
 
 ```cpp
@@ -137,10 +139,131 @@ int main() {
 }
 ```
 
+@subsection advanced_example Advanced Example with New Features
+
+Here's a more advanced example showcasing the newer features:
+
+```cpp
+#include <LinearAllocator/LinearAllocator.hpp>
+#include <iostream>
+
+struct Point {
+    float x, y, z;
+
+    Point(float x_val = 0, float y_val = 0, float z_val = 0)
+        : x(x_val), y(y_val), z(z_val) {}
+};
+
+// Function that allocates and initializes points
+std::expected<Point*, alloc::AllocError> create_points(alloc::LinearAllocator& alloc, int count) {
+    auto points_result = alloc.allocate<Point>(count);
+    if (!points_result) {
+        return std::unexpected(points_result.error());
+    }
+
+    Point* points = points_result.value();
+    for (int i = 0; i < count; i++) {
+        new (&points[i]) Point(i * 1.0f, i * 2.0f, i * 3.0f);
+    }
+
+    return points;
+}
+
+int main() {
+    // Create a 1KB allocator
+    auto allocator_result = alloc::LinearAllocator::create(1024);
+    if (!allocator_result) {
+        std::cerr << "Failed to create allocator\n";
+        return 1;
+    }
+
+    auto& allocator = allocator_result.value();
+    std::cout << "Created allocator with " << allocator.capacity << " bytes capacity\n";
+
+    // Allocate points
+    auto points_result = create_points(allocator, 3);
+    if (!points_result) {
+        std::cerr << "Failed to allocate points\n";
+        return 1;
+    }
+
+    Point* points = points_result.value();
+    std::cout << "Allocated 3 points:\n";
+    for (int i = 0; i < 3; i++) {
+        std::cout << "  Point " << i << ": ("
+                  << points[i].x << ", "
+                  << points[i].y << ", "
+                  << points[i].z << ")\n";
+    }
+    std::cout << "Used memory: " << allocator.used << " bytes\n";
+
+    // Demonstrate resize functionality
+    std::cout << "\nResizing the points array from 3 to 5 points...\n";
+    auto resized_points = allocator.resize<Point>(points, 3, 5);
+    if (!resized_points) {
+        std::cerr << "Failed to resize points\n";
+        return 1;
+    }
+
+    points = resized_points.value();
+    new (&points[3]) Point(10.0f, 11.0f, 12.0f);
+    new (&points[4]) Point(13.0f, 14.0f, 15.0f);
+
+    std::cout << "Resized to 5 points, used memory: " << allocator.used << " bytes\n";
+
+    // Demonstrate temporary memory
+    {
+        std::cout << "\nCreating temporary memory scope...\n";
+        auto temp_mem = alloc::TempArenaMemory::begin(allocator);
+
+        std::cout << "Used before temp allocations: " << allocator.used << " bytes\n";
+
+        // Allocate some temporary data
+        auto temp_result = allocator.allocate<float>(100);
+        if (!temp_result) {
+            std::cerr << "Failed to allocate temporary data\n";
+            return 1;
+        }
+
+        float* temp_data = temp_result.value();
+        for (int i = 0; i < 100; i++) {
+            temp_data[i] = static_cast<float>(i);
+        }
+
+        std::cout << "Used during temp allocations: " << allocator.used << " bytes\n";
+
+        // Temp memory goes out of scope here and will be automatically rolled back
+    }
+
+    std::cout << "Used after temp memory scope ends: " << allocator.used << " bytes\n";
+
+    // Create a linear allocator from an existing buffer
+    std::cout << "\nCreating an allocator from an existing buffer...\n";
+    uint8_t buffer[512];
+    auto buffer_allocator_result = alloc::LinearAllocator::create_from_buffer(buffer, sizeof(buffer));
+    if (!buffer_allocator_result) {
+        std::cerr << "Failed to create buffer allocator\n";
+        return 1;
+    }
+
+    auto& buffer_allocator = buffer_allocator_result.value();
+    std::cout << "Created buffer allocator with " << buffer_allocator.capacity << " bytes capacity\n";
+
+    // Clean up the allocator's memory
+    std::free(allocator.buffer);
+
+    return 0;
+}
+```
+
 @section best_practices Best Practices
 
-1. **Error Handling**: Always check the result of allocation operations
-2. **Memory Management**: Remember to manually free the allocator's buffer when done
-3. **Reset**: Use reset when you want to reuse memory for new allocations
-4. **Alignment**: Use proper alignment for SIMD types and cache-sensitive data
+1. **Error Handling**: Always check the result of allocation operations using the `std::expected` interface.
+2. **Memory Management**: Remember to manually free the allocator's buffer when done (`std::free(allocator.buffer)`).
+3. **Reset**: Use `reset()` when you want to reuse memory for new allocations.
+4. **Temporary Memory**: Use `TempArenaMemory` for short-lived allocations that can be automatically cleaned up.
+5. **Resize**: Use `resize()` for the last allocation when you need to grow or shrink it.
+6. **Buffer Creation**: Use `create_from_buffer()` when you already have a memory buffer you want to use.
+7. **Alignment**: Use proper alignment for SIMD types, cache-sensitive data, and hardware-specific requirements.
+8. **Zero Memory**: Use the `zero_memory` parameter to control whether memory is zeroed on allocation.
 */

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['capacity_0',['capacity',['../structalloc_1_1_linear_allocator.html#a1509acdf5e75b8996cf04799e281bed3',1,'alloc::LinearAllocator']]]
+  ['buffer_0',['buffer',['../structalloc_1_1_linear_allocator.html#a95da4ddfa14c9964cafa295be2169e26',1,'alloc::LinearAllocator']]]
 ];

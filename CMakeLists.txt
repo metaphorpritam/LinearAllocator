@@ -26,9 +26,15 @@ target_include_directories(linear_allocator INTERFACE
 )
 target_compile_features(linear_allocator INTERFACE cxx_std_23)
 
-# Add example executable
+# Add example executables
 add_executable(simplified_example example/simplified_example.cpp)
 target_link_libraries(simplified_example PRIVATE fmt::fmt linear_allocator)
+
+add_executable(example_allocator example/example_allocator.cpp)
+target_link_libraries(example_allocator PRIVATE fmt::fmt linear_allocator)
+
+add_executable(improved_example example/improved_example.cpp)
+target_link_libraries(improved_example PRIVATE fmt::fmt linear_allocator)
 
 # Set up Doxygen
 find_package(Doxygen)
@@ -38,8 +44,14 @@ if(DOXYGEN_FOUND)
     set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/doc/DOXYGEN.in)
     set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
 
-    # Include additional documentation files
-    set(DOXYGEN_EXTRA_INPUT "${CMAKE_SOURCE_DIR}/doc/mainpage.dox ${CMAKE_SOURCE_DIR}/doc/library_usage.dox")
+    # Include additional documentation files if they exist
+    set(DOXYGEN_EXTRA_INPUT "")
+    if(EXISTS "${CMAKE_SOURCE_DIR}/doc/mainpage.dox")
+        set(DOXYGEN_EXTRA_INPUT "${DOXYGEN_EXTRA_INPUT} ${CMAKE_SOURCE_DIR}/doc/mainpage.dox")
+    endif()
+    if(EXISTS "${CMAKE_SOURCE_DIR}/doc/library_usage.dox")
+        set(DOXYGEN_EXTRA_INPUT "${DOXYGEN_EXTRA_INPUT} ${CMAKE_SOURCE_DIR}/doc/library_usage.dox")
+    endif()
 
     # Configure the Doxyfile
     configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)

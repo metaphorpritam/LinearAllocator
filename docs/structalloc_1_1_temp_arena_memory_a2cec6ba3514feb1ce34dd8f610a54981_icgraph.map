@@ -1,0 +1,5 @@
+<map id="alloc::TempArenaMemory::end" name="alloc::TempArenaMemory::end">
+<area shape="rect" id="Node000001" title="End the temporary arena memory, rolling back any allocations made since creation." alt="" coords="223,13,421,40"/>
+<area shape="rect" id="Node000002" href="$structalloc_1_1_temp_arena_memory.html#aadf3d9a4a8cbcf1348e3116724cea3bd" title="Destructor that automatically ends the temporary memory if not already ended." alt="" coords="5,5,175,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,29,175,29,175,24,207,24"/>
+</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['reset_0',['reset',['../structalloc_1_1_linear_allocator.html#a55b3ab3aab1111499bcd00750bd9660e',1,'alloc::LinearAllocator']]]
+  ['end_0',['end',['../structalloc_1_1_temp_arena_memory.html#a2cec6ba3514feb1ce34dd8f610a54981',1,'alloc::TempArenaMemory']]]
 ];

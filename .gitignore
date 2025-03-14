@@ -2,7 +2,7 @@
 Add-Content -Path .gitignore -Value ""
 Add-Content -Path .gitignore -Value "# Build directories"
 Add-Content -Path .gitignore -Value "build/"
-Add-Content -Path .gitignore -Value "doc/html"
+Add-Content -Path .gitignore -Value "doc/html/"
 Add-Content -Path .gitignore -Value "out/"
 Add-Content -Path .gitignore -Value "cmake-build-*/"
 

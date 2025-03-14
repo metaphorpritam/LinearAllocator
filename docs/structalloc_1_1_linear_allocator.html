@@ -98,21 +98,21 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>A simplified linear allocator.  
+<p>A linear/arena allocator that allocates memory linearly from a pre-allocated block.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_linear_allocator_8hpp_source.html">LinearAllocator.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for alloc::LinearAllocator:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="structalloc_1_1_linear_allocator__coll__graph.svg" width="143" height="208"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="structalloc_1_1_linear_allocator__coll__graph.svg" width="151" height="294"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abdd7cdc843de59fa02a87ec72946c73e" id="r_abdd7cdc843de59fa02a87ec72946c73e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdd7cdc843de59fa02a87ec72946c73e">LinearAllocator</a> (uint8_t *buffer_ptr, size_t capacity_in_bytes)</td></tr>
-<tr class="memdesc:abdd7cdc843de59fa02a87ec72946c73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Linear Allocator.  <br /></td></tr>
-<tr class="separator:abdd7cdc843de59fa02a87ec72946c73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0dac06d722df9d3e16d5459184a2a8de" id="r_a0dac06d722df9d3e16d5459184a2a8de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dac06d722df9d3e16d5459184a2a8de">LinearAllocator</a> (uint8_t *buffer_ptr, size_t capacity_in_bytes, bool zero_memory=true)</td></tr>
+<tr class="memdesc:a0dac06d722df9d3e16d5459184a2a8de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Linear Allocator.  <br /></td></tr>
+<tr class="separator:a0dac06d722df9d3e16d5459184a2a8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c9ecdb15ce514ad1221d721e03c631e" id="r_a7c9ecdb15ce514ad1221d721e03c631e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7c9ecdb15ce514ad1221d721e03c631e"><td class="memTemplItemLeft" align="right" valign="top">std::expected&lt; T *, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7c9ecdb15ce514ad1221d721e03c631e">allocate</a> (size_t count=1, size_t alignment=alignof(T))</td></tr>
 <tr class="memdesc:a7c9ecdb15ce514ad1221d721e03c631e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory with a specified alignment.  <br /></td></tr>
@@ -120,15 +120,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aec281f71230d84f4456ab1b5d0f336c9" id="r_aec281f71230d84f4456ab1b5d0f336c9"><td class="memItemLeft" align="right" valign="top">std::expected&lt; void *, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec281f71230d84f4456ab1b5d0f336c9">allocate_bytes</a> (size_t size_in_bytes, size_t alignment=alignof(std::max_align_t))</td></tr>
 <tr class="memdesc:aec281f71230d84f4456ab1b5d0f336c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate uninitialized memory with a specified alignment.  <br /></td></tr>
 <tr class="separator:aec281f71230d84f4456ab1b5d0f336c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cf7e65012d8238d871a075bc49fccba" id="r_a8cf7e65012d8238d871a075bc49fccba"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a8cf7e65012d8238d871a075bc49fccba"><td class="memTemplItemLeft" align="right" valign="top">std::expected&lt; T *, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8cf7e65012d8238d871a075bc49fccba">resize</a> (T *old_ptr, size_t old_count, size_t new_count, size_t alignment=alignof(T))</td></tr>
+<tr class="memdesc:a8cf7e65012d8238d871a075bc49fccba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize the last allocation made.  <br /></td></tr>
+<tr class="separator:a8cf7e65012d8238d871a075bc49fccba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55b3ab3aab1111499bcd00750bd9660e" id="r_a55b3ab3aab1111499bcd00750bd9660e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55b3ab3aab1111499bcd00750bd9660e">reset</a> ()</td></tr>
 <tr class="memdesc:a55b3ab3aab1111499bcd00750bd9660e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the allocator, effectively freeing all allocations.  <br /></td></tr>
 <tr class="separator:a55b3ab3aab1111499bcd00750bd9660e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae7290003e4506083a0d4038c9be399ab" id="r_ae7290003e4506083a0d4038c9be399ab"><td class="memItemLeft" align="right" valign="top">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7290003e4506083a0d4038c9be399ab">create</a> (size_t size_in_bytes)</td></tr>
-<tr class="memdesc:ae7290003e4506083a0d4038c9be399ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Linear Allocator with a given capacity.  <br /></td></tr>
-<tr class="separator:ae7290003e4506083a0d4038c9be399ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca95ee52059b27c558bff705b263cbc6" id="r_aca95ee52059b27c558bff705b263cbc6"><td class="memItemLeft" align="right" valign="top">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aca95ee52059b27c558bff705b263cbc6">create</a> (size_t size_in_bytes, bool zero_memory=true)</td></tr>
+<tr class="memdesc:aca95ee52059b27c558bff705b263cbc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Linear Allocator with a given capacity.  <br /></td></tr>
+<tr class="separator:aca95ee52059b27c558bff705b263cbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7caa487cdb042f4ecedb69a646fe5dc0" id="r_a7caa487cdb042f4ecedb69a646fe5dc0"><td class="memItemLeft" align="right" valign="top">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7caa487cdb042f4ecedb69a646fe5dc0">create_from_buffer</a> (uint8_t *buffer_ptr, size_t size_in_bytes, bool zero_memory=true)</td></tr>
+<tr class="memdesc:a7caa487cdb042f4ecedb69a646fe5dc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Linear Allocator from an existing buffer.  <br /></td></tr>
+<tr class="separator:a7caa487cdb042f4ecedb69a646fe5dc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -141,13 +148,20 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac0e0a6335bf1eae7604d4b88f24368de" id="r_ac0e0a6335bf1eae7604d4b88f24368de"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0e0a6335bf1eae7604d4b88f24368de">used</a></td></tr>
 <tr class="memdesc:ac0e0a6335bf1eae7604d4b88f24368de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current number of bytes used.  <br /></td></tr>
 <tr class="separator:ac0e0a6335bf1eae7604d4b88f24368de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af67aa68f552cdff722b5e2bc58ef773e" id="r_af67aa68f552cdff722b5e2bc58ef773e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af67aa68f552cdff722b5e2bc58ef773e">prev_used</a></td></tr>
+<tr class="memdesc:af67aa68f552cdff722b5e2bc58ef773e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the previous allocation (for resize operations)  <br /></td></tr>
+<tr class="separator:af67aa68f552cdff722b5e2bc58ef773e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a339e10c7891fc2c1c2fbff855c599b79" id="r_a339e10c7891fc2c1c2fbff855c599b79"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a339e10c7891fc2c1c2fbff855c599b79">zero_on_alloc</a></td></tr>
+<tr class="memdesc:a339e10c7891fc2c1c2fbff855c599b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to zero memory on allocation.  <br /></td></tr>
+<tr class="separator:a339e10c7891fc2c1c2fbff855c599b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A simplified linear allocator. </p>
-<p>This allocator manages a pre-allocated memory block and allocates from it linearly, with support for alignment requirements. </p>
+<div class="textblock"><p>A linear/arena allocator that allocates memory linearly from a pre-allocated block. </p>
+<p>This allocator provides O(1) allocation time and doesn't support freeing individual allocations. The entire memory block can be reset at once.</p>
+<p>Based on the memory allocation strategy described in "Memory Allocation Strategies - Part 2" by Ginger Bill. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abdd7cdc843de59fa02a87ec72946c73e" name="abdd7cdc843de59fa02a87ec72946c73e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abdd7cdc843de59fa02a87ec72946c73e">&#9670;&#160;</a></span>LinearAllocator()</h2>
+<a id="a0dac06d722df9d3e16d5459184a2a8de" name="a0dac06d722df9d3e16d5459184a2a8de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dac06d722df9d3e16d5459184a2a8de">&#9670;&#160;</a></span>LinearAllocator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,7 +177,12 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity_in_bytes</em></span>&#160;)</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity_in_bytes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>zero_memory</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -178,6 +197,7 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">buffer_ptr</td><td>Pointer to the memory buffer </td></tr>
     <tr><td class="paramname">capacity_in_bytes</td><td>Capacity of the allocator in bytes </td></tr>
+    <tr><td class="paramname">zero_memory</td><td>Whether to zero memory on allocation </td></tr>
   </table>
   </dd>
 </dl>
@@ -255,8 +275,8 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="ae7290003e4506083a0d4038c9be399ab" name="ae7290003e4506083a0d4038c9be399ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7290003e4506083a0d4038c9be399ab">&#9670;&#160;</a></span>create()</h2>
+<a id="aca95ee52059b27c558bff705b263cbc6" name="aca95ee52059b27c558bff705b263cbc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca95ee52059b27c558bff705b263cbc6">&#9670;&#160;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,8 +287,12 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt; alloc::LinearAllocator::create </td>
           <td>(</td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size_in_bytes</em></span></td><td>)</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size_in_bytes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>zero_memory</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -282,6 +306,52 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size_in_bytes</td><td>The total size of the allocator in bytes </td></tr>
+    <tr><td class="paramname">zero_memory</td><td>Whether to zero memory on allocation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::expected&lt;LinearAllocator, AllocError&gt; A new allocator or an error </dd></dl>
+
+</div>
+</div>
+<a id="a7caa487cdb042f4ecedb69a646fe5dc0" name="a7caa487cdb042f4ecedb69a646fe5dc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7caa487cdb042f4ecedb69a646fe5dc0">&#9670;&#160;</a></span>create_from_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt; alloc::LinearAllocator::create_from_buffer </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>buffer_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size_in_bytes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>zero_memory</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a new Linear Allocator from an existing buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer_ptr</td><td>Pointer to the memory buffer </td></tr>
+    <tr><td class="paramname">size_in_bytes</td><td>The total size of the buffer in bytes </td></tr>
+    <tr><td class="paramname">zero_memory</td><td>Whether to zero memory on allocation </td></tr>
   </table>
   </dd>
 </dl>
@@ -313,7 +383,59 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Reset the allocator, effectively freeing all allocations. </p>
-<p>This simply resets the used counter so the memory can be reused. </p>
+<p>This simply resets the used counters so the memory can be reused. </p>
+
+</div>
+</div>
+<a id="a8cf7e65012d8238d871a075bc49fccba" name="a8cf7e65012d8238d871a075bc49fccba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cf7e65012d8238d871a075bc49fccba">&#9670;&#160;</a></span>resize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::expected&lt; T *, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt; alloc::LinearAllocator::resize </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>old_ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>old_count</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>new_count</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>alignment</em></span><span class="paramdefsep"> = </span><span class="paramdefval">alignof(T)</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resize the last allocation made. </p>
+<p>If the memory being resized was the last allocation made, this will efficiently resize it in place. Otherwise, it will allocate new memory and copy the old data.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the allocation </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">old_ptr</td><td>Pointer to the old memory </td></tr>
+    <tr><td class="paramname">old_count</td><td>Old element count </td></tr>
+    <tr><td class="paramname">new_count</td><td>New element count </td></tr>
+    <tr><td class="paramname">alignment</td><td>Alignment requirements </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::expected&lt;T*, AllocError&gt; Pointer to resized memory or an error </dd></dl>
 
 </div>
 </div>
@@ -350,6 +472,22 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a id="af67aa68f552cdff722b5e2bc58ef773e" name="af67aa68f552cdff722b5e2bc58ef773e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af67aa68f552cdff722b5e2bc58ef773e">&#9670;&#160;</a></span>prev_used</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t alloc::LinearAllocator::prev_used</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Offset of the previous allocation (for resize operations) </p>
+
+</div>
+</div>
 <a id="ac0e0a6335bf1eae7604d4b88f24368de" name="ac0e0a6335bf1eae7604d4b88f24368de"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac0e0a6335bf1eae7604d4b88f24368de">&#9670;&#160;</a></span>used</h2>
 
@@ -363,6 +501,22 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Current number of bytes used. </p>
+
+</div>
+</div>
+<a id="a339e10c7891fc2c1c2fbff855c599b79" name="a339e10c7891fc2c1c2fbff855c599b79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a339e10c7891fc2c1c2fbff855c599b79">&#9670;&#160;</a></span>zero_on_alloc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool alloc::LinearAllocator::zero_on_alloc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether to zero memory on allocation. </p>
 
 </div>
 </div>
