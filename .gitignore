@@ -2,6 +2,7 @@
 Add-Content -Path .gitignore -Value ""
 Add-Content -Path .gitignore -Value "# Build directories"
 Add-Content -Path .gitignore -Value "build/"
+Add-Content -Path .gitignore -Value "doc/"
 Add-Content -Path .gitignore -Value "out/"
 Add-Content -Path .gitignore -Value "cmake-build-*/"
 
@@ -20,5 +21,3 @@ Add-Content -Path .gitignore -Value ".vs/"
 Add-Content -Path .gitignore -Value ".idea/"
 Add-Content -Path .gitignore -Value "*.swp"
 Add-Content -Path .gitignore -Value "*.swo"
-# Doxygen generated files
-doc/html/
