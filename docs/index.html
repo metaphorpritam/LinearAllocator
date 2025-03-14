@@ -90,7 +90,7 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="intro"></a>
 Introduction</h1>
-<p>This is a Data-Oriented Programming implementation of a linear allocator with precise alignment control. The allocator follows strict DOP principles with public data members, struct methods, and no getters/setters.</p>
+<p>This is a Data-Oriented Programming implementation of a simplified linear allocator with precise alignment control. The allocator follows strict DOP principles with public data members, struct methods, and no getters/setters.</p>
 <h1><a class="anchor" id="overview"></a>
 Overview</h1>
 <p>This implementation provides a simple linear allocator with alignment specification following data-oriented programming principles. The allocator supports:</p>
@@ -98,8 +98,7 @@ Overview</h1>
 <li>Precise memory alignment for any data type</li>
 <li>Using <code>uint8_t*</code> instead of <code>char*</code> for pointer arithmetic</li>
 <li>Passing the allocator by reference to functions</li>
-<li>Memory reset and free operations</li>
-<li>Move-only semantics</li>
+<li>Memory reset operation</li>
 <li>Error handling via <code>std::expected</code> (C++23)</li>
 </ul>
 <h1><a class="anchor" id="design"></a>
@@ -109,7 +108,7 @@ Design Principles</h1>
 <li>Methods defined inline within the struct declaration</li>
 <li>No private encapsulation</li>
 <li>Separation of data and behavior where appropriate</li>
-<li>Support for custom allocators with move-only semantics</li>
+<li>Simplified memory management (user manages freeing)</li>
 </ul>
 <h1><a class="anchor" id="usage"></a>
 Basic Usage</h1>
@@ -151,15 +150,15 @@ Passing to Functions</h2>
 <div class="line">    <span class="comment">// Initialize points...</span></div>
 <div class="line">    <span class="keywordflow">return</span> points;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacealloc_html"><div class="ttname"><a href="namespacealloc.html">alloc</a></div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:12</div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A simple linear allocator with alignment specification.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:30</div></div>
+<div class="ttc" id="anamespacealloc_html"><div class="ttname"><a href="namespacealloc.html">alloc</a></div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:8</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A simplified linear allocator.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:24</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="reset"></a>
 Memory Management</h2>
 <div class="fragment"><div class="line"><span class="comment">// Reset the allocator (keeps the memory but resets usage counter)</span></div>
 <div class="line">allocator.reset();</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">// Free the allocator (releases memory if it owns it)</span></div>
-<div class="line">allocator.free();</div>
+<div class="line"><span class="comment">// Remember to manually free the memory when done</span></div>
+<div class="line">std::free(allocator.buffer);</div>
 </div><!-- fragment --><h1><a class="anchor" id="errors"></a>
 Error Handling</h1>
 <p>The allocator uses <code>std::expected</code> for error handling:</p>
@@ -172,7 +171,6 @@ Error Handling</h1>
 <div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9a6d69f88eb0d6ddadcf9785bd01cb3288">alloc::AllocError::InvalidAlignment</a>:</div>
 <div class="line">            <span class="comment">// Handle invalid alignment</span></div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="comment">// Handle other errors...</span></div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacealloc_html_aa0f2065c1fb1b69217b094884a7556f9a6d69f88eb0d6ddadcf9785bd01cb3288"><div class="ttname"><a href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9a6d69f88eb0d6ddadcf9785bd01cb3288">alloc::AllocError::InvalidAlignment</a></div><div class="ttdeci">@ InvalidAlignment</div><div class="ttdoc">Alignment is not a power of 2.</div></div>

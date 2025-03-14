@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['owns_5fmemory_0',['owns_memory',['../structalloc_1_1_linear_allocator.html#a81c6f3e10655664ce03fa9226de5cbfc',1,'alloc::LinearAllocator']]]
+  ['used_0',['used',['../structalloc_1_1_linear_allocator.html#ac0e0a6335bf1eae7604d4b88f24368de',1,'alloc::LinearAllocator']]]
 ];

@@ -98,24 +98,21 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>A simple linear allocator with alignment specification.  
+<p>A simplified linear allocator.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_linear_allocator_8hpp_source.html">LinearAllocator.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for alloc::LinearAllocator:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="structalloc_1_1_linear_allocator__coll__graph.svg" width="151" height="400"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="structalloc_1_1_linear_allocator__coll__graph.svg" width="143" height="208"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a99477ff4bf589b47df4884c9652b8d5e" id="r_a99477ff4bf589b47df4884c9652b8d5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99477ff4bf589b47df4884c9652b8d5e">LinearAllocator</a> ()</td></tr>
-<tr class="memdesc:a99477ff4bf589b47df4884c9652b8d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a default Linear Allocator (no memory allocated)  <br /></td></tr>
-<tr class="separator:a99477ff4bf589b47df4884c9652b8d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b0e9f558846decb5575087140e8cba3" id="r_a2b0e9f558846decb5575087140e8cba3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b0e9f558846decb5575087140e8cba3">LinearAllocator</a> (uint8_t *buffer_ptr, size_t capacity_in_bytes, bool owns_mem)</td></tr>
-<tr class="memdesc:a2b0e9f558846decb5575087140e8cba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Linear Allocator.  <br /></td></tr>
-<tr class="separator:a2b0e9f558846decb5575087140e8cba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdd7cdc843de59fa02a87ec72946c73e" id="r_abdd7cdc843de59fa02a87ec72946c73e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdd7cdc843de59fa02a87ec72946c73e">LinearAllocator</a> (uint8_t *buffer_ptr, size_t capacity_in_bytes)</td></tr>
+<tr class="memdesc:abdd7cdc843de59fa02a87ec72946c73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Linear Allocator.  <br /></td></tr>
+<tr class="separator:abdd7cdc843de59fa02a87ec72946c73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c9ecdb15ce514ad1221d721e03c631e" id="r_a7c9ecdb15ce514ad1221d721e03c631e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a7c9ecdb15ce514ad1221d721e03c631e"><td class="memTemplItemLeft" align="right" valign="top">std::expected&lt; T *, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7c9ecdb15ce514ad1221d721e03c631e">allocate</a> (size_t count=1, size_t alignment=alignof(T))</td></tr>
 <tr class="memdesc:a7c9ecdb15ce514ad1221d721e03c631e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory with a specified alignment.  <br /></td></tr>
@@ -126,36 +123,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a55b3ab3aab1111499bcd00750bd9660e" id="r_a55b3ab3aab1111499bcd00750bd9660e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55b3ab3aab1111499bcd00750bd9660e">reset</a> ()</td></tr>
 <tr class="memdesc:a55b3ab3aab1111499bcd00750bd9660e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the allocator, effectively freeing all allocations.  <br /></td></tr>
 <tr class="separator:a55b3ab3aab1111499bcd00750bd9660e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae013ef50370b1b26c121cccade660c65" id="r_ae013ef50370b1b26c121cccade660c65"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae013ef50370b1b26c121cccade660c65">free</a> ()</td></tr>
-<tr class="memdesc:ae013ef50370b1b26c121cccade660c65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the allocator and its memory if it owns it.  <br /></td></tr>
-<tr class="separator:ae013ef50370b1b26c121cccade660c65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a1c3b646d616c7dbbe7358b3cae6b16" id="r_a8a1c3b646d616c7dbbe7358b3cae6b16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a1c3b646d616c7dbbe7358b3cae6b16">LinearAllocator</a> (<a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;&amp;other) noexcept</td></tr>
-<tr class="memdesc:a8a1c3b646d616c7dbbe7358b3cae6b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor.  <br /></td></tr>
-<tr class="separator:a8a1c3b646d616c7dbbe7358b3cae6b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54862cb46846fffbd4798f5125d9d0f2" id="r_a54862cb46846fffbd4798f5125d9d0f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54862cb46846fffbd4798f5125d9d0f2">operator=</a> (<a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;&amp;other) noexcept</td></tr>
-<tr class="memdesc:a54862cb46846fffbd4798f5125d9d0f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator.  <br /></td></tr>
-<tr class="separator:a54862cb46846fffbd4798f5125d9d0f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeb53b24f7cb602838310e2672b3420d" id="r_abeb53b24f7cb602838310e2672b3420d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abeb53b24f7cb602838310e2672b3420d">~LinearAllocator</a> ()</td></tr>
-<tr class="memdesc:abeb53b24f7cb602838310e2672b3420d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <br /></td></tr>
-<tr class="separator:abeb53b24f7cb602838310e2672b3420d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14a6197f27dc75eeb5db760e5cf14fe1" id="r_a14a6197f27dc75eeb5db760e5cf14fe1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14a6197f27dc75eeb5db760e5cf14fe1">LinearAllocator</a> (const <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;)=delete</td></tr>
-<tr class="separator:a14a6197f27dc75eeb5db760e5cf14fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0f27977fd3021c6ffbe3985d2e92be3" id="r_af0f27977fd3021c6ffbe3985d2e92be3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0f27977fd3021c6ffbe3985d2e92be3">operator=</a> (const <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;)=delete</td></tr>
-<tr class="separator:af0f27977fd3021c6ffbe3985d2e92be3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae7290003e4506083a0d4038c9be399ab" id="r_ae7290003e4506083a0d4038c9be399ab"><td class="memItemLeft" align="right" valign="top">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7290003e4506083a0d4038c9be399ab">create</a> (size_t size_in_bytes)</td></tr>
 <tr class="memdesc:ae7290003e4506083a0d4038c9be399ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Linear Allocator with a given capacity.  <br /></td></tr>
 <tr class="separator:ae7290003e4506083a0d4038c9be399ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20dda3e2cf6f93baecc49a14f67c4cb9" id="r_a20dda3e2cf6f93baecc49a14f67c4cb9"><td class="memItemLeft" align="right" valign="top">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20dda3e2cf6f93baecc49a14f67c4cb9">create_from_buffer</a> (uint8_t *existing_buffer, size_t size_in_bytes)</td></tr>
-<tr class="memdesc:a20dda3e2cf6f93baecc49a14f67c4cb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Linear Allocator using an existing buffer.  <br /></td></tr>
-<tr class="separator:a20dda3e2cf6f93baecc49a14f67c4cb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a95da4ddfa14c9964cafa295be2169e26" id="r_a95da4ddfa14c9964cafa295be2169e26"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95da4ddfa14c9964cafa295be2169e26">buffer</a></td></tr>
-<tr class="memdesc:a95da4ddfa14c9964cafa295be2169e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the allocated memory.  <br /></td></tr>
+<tr class="memdesc:a95da4ddfa14c9964cafa295be2169e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the memory buffer.  <br /></td></tr>
 <tr class="separator:a95da4ddfa14c9964cafa295be2169e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1509acdf5e75b8996cf04799e281bed3" id="r_a1509acdf5e75b8996cf04799e281bed3"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1509acdf5e75b8996cf04799e281bed3">capacity</a></td></tr>
 <tr class="memdesc:a1509acdf5e75b8996cf04799e281bed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total capacity of the allocator in bytes.  <br /></td></tr>
@@ -163,43 +141,13 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac0e0a6335bf1eae7604d4b88f24368de" id="r_ac0e0a6335bf1eae7604d4b88f24368de"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0e0a6335bf1eae7604d4b88f24368de">used</a></td></tr>
 <tr class="memdesc:ac0e0a6335bf1eae7604d4b88f24368de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Current number of bytes used.  <br /></td></tr>
 <tr class="separator:ac0e0a6335bf1eae7604d4b88f24368de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81c6f3e10655664ce03fa9226de5cbfc" id="r_a81c6f3e10655664ce03fa9226de5cbfc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81c6f3e10655664ce03fa9226de5cbfc">owns_memory</a></td></tr>
-<tr class="memdesc:a81c6f3e10655664ce03fa9226de5cbfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the allocator owns the memory (responsible for freeing)  <br /></td></tr>
-<tr class="separator:a81c6f3e10655664ce03fa9226de5cbfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A simple linear allocator with alignment specification. </p>
-<p>This allocator manages a contiguous block of memory and allocates from it linearly, with support for alignment requirements. </p>
+<div class="textblock"><p>A simplified linear allocator. </p>
+<p>This allocator manages a pre-allocated memory block and allocates from it linearly, with support for alignment requirements. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a99477ff4bf589b47df4884c9652b8d5e" name="a99477ff4bf589b47df4884c9652b8d5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99477ff4bf589b47df4884c9652b8d5e">&#9670;&#160;</a></span>LinearAllocator() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">alloc::LinearAllocator::LinearAllocator </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Construct a default Linear Allocator (no memory allocated) </p>
-
-</div>
-</div>
-<a id="a2b0e9f558846decb5575087140e8cba3" name="a2b0e9f558846decb5575087140e8cba3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b0e9f558846decb5575087140e8cba3">&#9670;&#160;</a></span>LinearAllocator() <span class="overload">[2/4]</span></h2>
+<a id="abdd7cdc843de59fa02a87ec72946c73e" name="abdd7cdc843de59fa02a87ec72946c73e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd7cdc843de59fa02a87ec72946c73e">&#9670;&#160;</a></span>LinearAllocator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,12 +163,7 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity_in_bytes</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>owns_mem</em></span>&#160;)</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>capacity_in_bytes</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -235,88 +178,9 @@ Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">buffer_ptr</td><td>Pointer to the memory buffer </td></tr>
     <tr><td class="paramname">capacity_in_bytes</td><td>Capacity of the allocator in bytes </td></tr>
-    <tr><td class="paramname">owns_mem</td><td>Whether the allocator owns the memory </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a8a1c3b646d616c7dbbe7358b3cae6b16" name="a8a1c3b646d616c7dbbe7358b3cae6b16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a1c3b646d616c7dbbe7358b3cae6b16">&#9670;&#160;</a></span>LinearAllocator() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">alloc::LinearAllocator::LinearAllocator </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Move constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td>The allocator to move from </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="abeb53b24f7cb602838310e2672b3420d" name="abeb53b24f7cb602838310e2672b3420d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abeb53b24f7cb602838310e2672b3420d">&#9670;&#160;</a></span>~LinearAllocator()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">alloc::LinearAllocator::~LinearAllocator </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Destructor. </p>
-<p>Calls <a class="el" href="#ae013ef50370b1b26c121cccade660c65" title="Free the allocator and its memory if it owns it.">free()</a> to deallocate memory if the allocator owns it. </p>
-
-</div>
-</div>
-<a id="a14a6197f27dc75eeb5db760e5cf14fe1" name="a14a6197f27dc75eeb5db760e5cf14fe1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14a6197f27dc75eeb5db760e5cf14fe1">&#9670;&#160;</a></span>LinearAllocator() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">alloc::LinearAllocator::LinearAllocator </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -425,129 +289,14 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a20dda3e2cf6f93baecc49a14f67c4cb9" name="a20dda3e2cf6f93baecc49a14f67c4cb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20dda3e2cf6f93baecc49a14f67c4cb9">&#9670;&#160;</a></span>create_from_buffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static std::expected&lt; <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a>, <a class="el" href="namespacealloc.html#aa0f2065c1fb1b69217b094884a7556f9">AllocError</a> &gt; alloc::LinearAllocator::create_from_buffer </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>existing_buffer</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size_in_bytes</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Create a new Linear Allocator using an existing buffer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">existing_buffer</td><td>Pointer to the existing buffer </td></tr>
-    <tr><td class="paramname">size_in_bytes</td><td>The size of the buffer in bytes </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::expected&lt;LinearAllocator, AllocError&gt; A new allocator or an error </dd></dl>
-
-</div>
-</div>
-<a id="ae013ef50370b1b26c121cccade660c65" name="ae013ef50370b1b26c121cccade660c65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae013ef50370b1b26c121cccade660c65">&#9670;&#160;</a></span>free()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void alloc::LinearAllocator::free </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Free the allocator and its memory if it owns it. </p>
-<p>This deallocates the memory if the allocator owns it, and resets the allocator state. </p>
-
-</div>
-</div>
-<a id="af0f27977fd3021c6ffbe3985d2e92be3" name="af0f27977fd3021c6ffbe3985d2e92be3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0f27977fd3021c6ffbe3985d2e92be3">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp; alloc::LinearAllocator::operator= </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a54862cb46846fffbd4798f5125d9d0f2" name="a54862cb46846fffbd4798f5125d9d0f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54862cb46846fffbd4798f5125d9d0f2">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp; alloc::LinearAllocator::operator= </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structalloc_1_1_linear_allocator.html">LinearAllocator</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Move assignment operator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">other</td><td>The allocator to move from </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structalloc_1_1_linear_allocator.html" title="A simple linear allocator with alignment specification.">LinearAllocator</a>&amp; Reference to this allocator </dd></dl>
-
-</div>
-</div>
 <a id="a55b3ab3aab1111499bcd00750bd9660e" name="a55b3ab3aab1111499bcd00750bd9660e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a55b3ab3aab1111499bcd00750bd9660e">&#9670;&#160;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void alloc::LinearAllocator::reset </td>
@@ -556,10 +305,15 @@ template&lt;typename T &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Reset the allocator, effectively freeing all allocations. </p>
-<p>This does not free the memory, it just resets the used counter so the memory can be reused for new allocations. </p>
+<p>This simply resets the used counter so the memory can be reused. </p>
 
 </div>
 </div>
@@ -576,7 +330,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Pointer to the allocated memory. </p>
+<p>Pointer to the memory buffer. </p>
 
 </div>
 </div>
@@ -593,22 +347,6 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Total capacity of the allocator in bytes. </p>
-
-</div>
-</div>
-<a id="a81c6f3e10655664ce03fa9226de5cbfc" name="a81c6f3e10655664ce03fa9226de5cbfc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81c6f3e10655664ce03fa9226de5cbfc">&#9670;&#160;</a></span>owns_memory</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool alloc::LinearAllocator::owns_memory</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Whether the allocator owns the memory (responsible for freeing) </p>
 
 </div>
 </div>

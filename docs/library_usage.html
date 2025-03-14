@@ -200,41 +200,23 @@ Usage Examples</h1>
 <div class="line">    <span class="comment">// Use the allocator</span></div>
 <div class="line">    allocate_vectors(allocator);</div>
 <div class="line"> </div>
+<div class="line">    <span class="comment">// Remember to free the memory when done</span></div>
+<div class="line">    std::free(allocator.<a class="code hl_variable" href="structalloc_1_1_linear_allocator.html#a95da4ddfa14c9964cafa295be2169e26">buffer</a>);</div>
+<div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="a_linear_allocator_8hpp_html"><div class="ttname"><a href="_linear_allocator_8hpp.html">LinearAllocator.hpp</a></div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A simple linear allocator with alignment specification.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:30</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html">alloc::LinearAllocator</a></div><div class="ttdoc">A simplified linear allocator.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:24</div></div>
 <div class="ttc" id="astructalloc_1_1_linear_allocator_html_a7c9ecdb15ce514ad1221d721e03c631e"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a7c9ecdb15ce514ad1221d721e03c631e">alloc::LinearAllocator::allocate</a></div><div class="ttdeci">std::expected&lt; T *, AllocError &gt; allocate(size_t count=1, size_t alignment=alignof(T))</div><div class="ttdoc">Allocate memory with a specified alignment.</div></div>
+<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a95da4ddfa14c9964cafa295be2169e26"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a95da4ddfa14c9964cafa295be2169e26">alloc::LinearAllocator::buffer</a></div><div class="ttdeci">uint8_t * buffer</div><div class="ttdoc">Pointer to the memory buffer.</div><div class="ttdef"><b>Definition</b> LinearAllocator.hpp:25</div></div>
 <div class="ttc" id="astructalloc_1_1_linear_allocator_html_ae7290003e4506083a0d4038c9be399ab"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#ae7290003e4506083a0d4038c9be399ab">alloc::LinearAllocator::create</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create(size_t size_in_bytes)</div><div class="ttdoc">Create a new Linear Allocator with a given capacity.</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="custom_allocator"></a>
-Using with Custom Allocators</h1>
-<p>The Linear Allocator is designed to work alongside custom allocators:</p>
-<div class="fragment"><div class="line"><span class="comment">// Create an existing buffer</span></div>
-<div class="line">uint8_t* buffer = <span class="keyword">static_cast&lt;</span>uint8_t*<span class="keyword">&gt;</span>(std::malloc(1024));</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Create a Linear Allocator from the buffer (not owning the memory)</span></div>
-<div class="line"><span class="keyword">auto</span> allocator_result = <a class="code hl_function" href="structalloc_1_1_linear_allocator.html#a20dda3e2cf6f93baecc49a14f67c4cb9">alloc::LinearAllocator::create_from_buffer</a>(buffer, 1024);</div>
-<div class="line"><span class="keywordflow">if</span> (allocator_result) {</div>
-<div class="line">    <span class="keyword">auto</span>&amp; allocator = allocator_result.value();</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// Use the allocator...</span></div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// Only reset the allocator, don&#39;t free the memory</span></div>
-<div class="line">    allocator.<a class="code hl_function" href="structalloc_1_1_linear_allocator.html#a55b3ab3aab1111499bcd00750bd9660e">reset</a>();</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// Free the buffer manually</span></div>
-<div class="line">std::free(buffer);</div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a20dda3e2cf6f93baecc49a14f67c4cb9"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a20dda3e2cf6f93baecc49a14f67c4cb9">alloc::LinearAllocator::create_from_buffer</a></div><div class="ttdeci">static std::expected&lt; LinearAllocator, AllocError &gt; create_from_buffer(uint8_t *existing_buffer, size_t size_in_bytes)</div><div class="ttdoc">Create a new Linear Allocator using an existing buffer.</div></div>
-<div class="ttc" id="astructalloc_1_1_linear_allocator_html_a55b3ab3aab1111499bcd00750bd9660e"><div class="ttname"><a href="structalloc_1_1_linear_allocator.html#a55b3ab3aab1111499bcd00750bd9660e">alloc::LinearAllocator::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">Reset the allocator, effectively freeing all allocations.</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="best_practices"></a>
 Best Practices</h1>
 <ol type="1">
 <li><b>Error Handling</b>: Always check the result of allocation operations</li>
-<li><b>Ownership</b>: Be clear about who owns the memory (the allocator or external code)</li>
-<li><b>Reset vs Free</b>: Use reset when you want to reuse memory, free when you're done with it</li>
-<li><b>Alignment</b>: Use proper alignment for SIMD types and cache-sensitive data</li>
-<li><b>Move Semantics</b>: Remember the allocator is move-only to prevent double-frees </li>
+<li><b>Memory Management</b>: Remember to manually free the allocator's buffer when done</li>
+<li><b>Reset</b>: Use reset when you want to reuse memory for new allocations</li>
+<li><b>Alignment</b>: Use proper alignment for SIMD types and cache-sensitive data </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

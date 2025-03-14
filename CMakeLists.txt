@@ -27,8 +27,8 @@ target_include_directories(linear_allocator INTERFACE
 target_compile_features(linear_allocator INTERFACE cxx_std_23)
 
 # Add example executable
-add_executable(example_allocator example/example_allocator.cpp)
-target_link_libraries(example_allocator PRIVATE fmt::fmt linear_allocator)
+add_executable(simplified_example example/simplified_example.cpp)
+target_link_libraries(simplified_example PRIVATE fmt::fmt linear_allocator)
 
 # Set up Doxygen
 find_package(Doxygen)
@@ -52,13 +52,6 @@ if(DOXYGEN_FOUND)
         VERBATIM
     )
 endif()
-
-# Installation rules
-install(FILES
-    src/LinearAllocator/LinearAllocator.hpp
-    src/LinearAllocator/LinearAllocator.tpp
-    DESTINATION include/LinearAllocator
-)
 
 # Build settings
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
