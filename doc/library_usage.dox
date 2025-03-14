@@ -1,0 +1,146 @@
+/**
+@page library_usage Using Linear Allocator as a Library
+
+@section integration_options Integration Options
+
+There are several ways to include the Linear Allocator in your own projects:
+
+@subsection direct_copy Direct Copy Method
+
+The simplest approach is to directly copy the source files:
+
+1. Copy the `src/LinearAllocator` directory into your project
+2. Ensure your project is using C++23 standard
+3. Include the header in your code:
+   ```cpp
+   #include "path/to/LinearAllocator/LinearAllocator.hpp"
+   ```
+
+@subsection cmake_subdir CMake Subdirectory
+
+For projects using CMake, you can add the Linear Allocator as a subdirectory:
+
+1. Add these lines to your project's CMakeLists.txt:
+   ```cmake
+   # Add LinearAllocator as a subdirectory
+   add_subdirectory(path/to/LinearAllocator)
+
+   # Link your targets against it
+   target_link_libraries(your_target PRIVATE linear_allocator)
+   ```
+
+2. Create a CMakeLists.txt in the LinearAllocator directory:
+   ```cmake
+   # Create an INTERFACE library
+   add_library(linear_allocator INTERFACE)
+
+   # Set include directories
+   target_include_directories(linear_allocator INTERFACE
+       ${CMAKE_CURRENT_SOURCE_DIR})
+
+   # Require C++23
+   target_compile_features(linear_allocator INTERFACE cxx_std_23)
+   ```
+
+@subsection git_submodule Git Submodule
+
+For better version control:
+
+1. Add LinearAllocator as a git submodule:
+   ```bash
+   git submodule add https://github.com/metaphorpritam/LinearAllocator.git external/LinearAllocator
+   ```
+
+2. In your CMakeLists.txt:
+   ```cmake
+   # Add the submodule
+   add_subdirectory(external/LinearAllocator)
+
+   # Link against it
+   target_link_libraries(your_target PRIVATE linear_allocator)
+   ```
+
+@subsection fetch_content FetchContent Method
+
+For automatic dependency management:
+
+1. In your CMakeLists.txt:
+   ```cmake
+   include(FetchContent)
+
+   # Declare the dependency
+   FetchContent_Declare(
+       linear_allocator
+       GIT_REPOSITORY https://github.com/metaphorpritam/LinearAllocator.git
+       GIT_TAG main # or a specific tag/commit
+   )
+
+   # Make it available
+   FetchContent_MakeAvailable(linear_allocator)
+
+   # Link against it
+   target_link_libraries(your_target PRIVATE linear_allocator)
+   ```
+
+@section usage_examples Usage Examples
+
+Here's a complete example of using the Linear Allocator in your project:
+
+```cpp
+#include <LinearAllocator/LinearAllocator.hpp>
+#include <iostream>
+
+struct Vector3 {
+    float x, y, z;
+};
+
+void allocate_vectors(alloc::LinearAllocator& allocator) {
+    // Allocate an array of Vector3
+    auto vec_result = allocator.allocate<Vector3>(10);
+    if (!vec_result) {
+        std::cerr << "Failed to allocate vectors\n";
+        return;
+    }
+
+    // Use the allocated memory
+    Vector3* vectors = vec_result.value();
+    for (int i = 0; i < 10; i++) {
+        vectors[i] = {static_cast<float>(i), static_cast<float>(i*2), static_cast<float>(i*3)};
+    }
+
+    // Print the values
+    for (int i = 0; i < 10; i++) {
+        std::cout << "Vector " << i << ": ("
+                  << vectors[i].x << ", "
+                  << vectors[i].y << ", "
+                  << vectors[i].z << ")\n";
+    }
+}
+
+int main() {
+    // Create a 1KB allocator
+    auto allocator_result = alloc::LinearAllocator::create(1024);
+    if (!allocator_result) {
+        std::cerr << "Failed to create allocator\n";
+        return 1;
+    }
+
+    auto& allocator = allocator_result.value();
+
+    // Use the allocator
+    allocate_vectors(allocator);
+
+    // Remember to free the memory when done
+    std::free(allocator.buffer);
+
+    return 0;
+}
+```
+
+@section best_practices Best Practices
+
+1. **Error Handling**: Always check the result of allocation operations
+2. **Memory Management**: Remember to manually free the allocator's buffer when done
+3. **Reset**: Use reset when you want to reuse memory for new allocations
+4. **Alignment**: Use proper alignment for SIMD types and cache-sensitive data
+*/
