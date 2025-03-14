@@ -24,6 +24,7 @@ project/
 │   ├── DOXYGEN.in              # Doxygen configuration
 │   ├── mainpage.dox            # Main documentation page
 │   └── library_usage.dox       # Library usage documentation
+|── docs/..                     # Files for github pages
 └── CMakeLists.txt              # Build configuration
 ```
 
