@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        ".clang*": "yaml",
-        "*.hpp.in": "cpp",
-        "*.in": "doxygen",
-        "*.nim": "nim",
-        "expected": "cpp"
-    }
-}
