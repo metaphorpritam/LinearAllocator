@@ -1,0 +1,24 @@
+
+Add-Content -Path .gitignore -Value ""
+Add-Content -Path .gitignore -Value "# Build directories"
+Add-Content -Path .gitignore -Value "build/"
+Add-Content -Path .gitignore -Value "out/"
+Add-Content -Path .gitignore -Value "cmake-build-*/"
+
+Add-Content -Path .gitignore -Value ""
+Add-Content -Path .gitignore -Value "# Compiled files"
+Add-Content -Path .gitignore -Value "*.o"
+Add-Content -Path .gitignore -Value "*.obj"
+Add-Content -Path .gitignore -Value "*.exe"
+Add-Content -Path .gitignore -Value "*.dll"
+Add-Content -Path .gitignore -Value "*.so"
+Add-Content -Path .gitignore -Value "*.dylib"
+
+Add-Content -Path .gitignore -Value ""
+Add-Content -Path .gitignore -Value "# IDE files"
+Add-Content -Path .gitignore -Value ".vs/"
+Add-Content -Path .gitignore -Value ".idea/"
+Add-Content -Path .gitignore -Value "*.swp"
+Add-Content -Path .gitignore -Value "*.swo"
+# Doxygen generated files
+doc/html/
