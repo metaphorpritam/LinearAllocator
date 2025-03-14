@@ -118,8 +118,9 @@ The project uses CMake for building. To build the examples:
 
 ```bash
 mkdir build && cd build
-cmake ..
-make
+cmake -G Ninja ..
+ninja 
+ninja docs
 ```
 
 See `doc/library_usage.dox` for detailed information on integrating this allocator into your own projects.
